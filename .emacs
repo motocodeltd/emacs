@@ -110,6 +110,7 @@
 (setq save-interprogram-paste-before-kill t)
 
 (add-hook 'after-init-hook 'global-company-mode)
+(define-key company-mode-map [remap indent-for-tab-command] #'company-indent-or-complete-common)
 
 ;; expand region
 (require 'expand-region)
