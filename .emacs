@@ -31,6 +31,7 @@
    (package-refresh-contents)
    (mapc #'package-install package-selected-packages))
 
+(delete-selection-mode 1)
 
 (setq mac-command-modifier 'super)
 
