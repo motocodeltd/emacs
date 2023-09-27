@@ -12,7 +12,6 @@
 				  ledger-mode
 				  exec-path-from-shell
 				  expand-region
-				  linum
 				  treemacs
 				  lsp-treemacs
 				  helm-lsp
@@ -45,10 +44,9 @@
 (cua-mode)
 
 ;;line numbers
-(require 'linum)
+(global-display-line-numbers-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)  ;; Line numbers on left most column
-(global-linum-mode 1)
 
 ;;simplenote
 (require 'simplenote2)
