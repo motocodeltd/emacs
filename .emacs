@@ -124,6 +124,11 @@
 (drag-stuff-global-mode 1)
 (drag-stuff-define-keys)
 
+
+(if (eq system-type 'darwin)
+    (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
+)
+
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
 
