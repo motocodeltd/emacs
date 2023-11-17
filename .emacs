@@ -23,7 +23,8 @@
 				  drag-stuff
 				  which-key
 				  helm-xref
-				  json-mode))
+				  json-mode
+				  multiple-cursors))
 
 
 (when (cl-find-if-not #'package-installed-p package-selected-packages)
@@ -176,3 +177,71 @@
 
 ;; (global-set-key (kbd "M-S-<up>") 'move-line-up)
 ;; (global-set-key (kbd "M-S-<down>") 'move-line-down)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(multiple-cursors simplenote2 use-package lsp-mode yasnippet dracula-theme ledger-mode exec-path-from-shell expand-region treemacs lsp-treemacs helm-lsp projectile hydra flycheck company avy drag-stuff which-key helm-xref json-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(defun my-mc-mark-next-like-this ()
+  "Select the next occurrence using multiple cursors."
+  (interactive)
+  (mc/mark-next-like-this 1))
+
+;; Bind for Linux (Alt-J)
+(global-set-key (kbd "M-j") 'my-mc-mark-next-like-this)
+
+;; Bind for macOS (Option-J)
+(when (eq system-type 'darwin)
+  (global-set-key (kbd "s-j") 'my-mc-mark-next-like-this))
+
+(defun my/kill-line (&optional arg)
+  "Delete the rest of the current line; if no nonblanks there, delete thru 
+With prefix argument ARG, delete that many lines from point.
+Negative arguments delete lines backward.
+With zero argument, delete the text before point on the current line.
+
+When calling from a program, nil means \"no arg\",
+a number counts as a prefix arg.
+
+If `show-trailing-whitespace' is non-nil, this command will just
+delete the rest of the current line, even if there are no nonblanks
+there.
+
+If option `kill-whole-line' is non-nil, then this command deletes the whole line
+including its terminating newline, when used at the beginning of a line
+with no argument.
+
+If the buffer is read-only, Emacs will beep and refrain from deleting
+the line."
+  (interactive "P")
+  (delete-region
+   (point)
+   (progn
+     (if arg
+         (forward-visible-line (prefix-numeric-value arg))
+       (if (eobp)
+           (signal 'end-of-buffer nil))
+       (let ((end
+              (save-excursion
+                (end-of-visible-line) (point))))
+         (if (or (save-excursion
+                   ;; If trailing whitespace is visible,
+                   ;; don't treat it as nothing.
+                   (unless show-trailing-whitespace
+                     (skip-chars-forward " \t" end))
+                   (= (point) end))
+                 (and kill-whole-line (bolp)))
+             (forward-visible-line 1)
+           (goto-char end))))
+     (point))))
+
+(global-set-key (kbd "C-k") 'my/kill-line)
