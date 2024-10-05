@@ -246,3 +246,5 @@ the line."
      (point))))
 
 (global-set-key (kbd "C-k") 'my/kill-line)
+
+(setq mac-right-option-modifier nil)
