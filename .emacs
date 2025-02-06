@@ -190,3 +190,4 @@
 
 
 (global-diff-hl-mode)
+(setq vc-follow-symlinks t)
