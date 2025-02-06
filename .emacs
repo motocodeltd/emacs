@@ -21,6 +21,7 @@
 				  flycheck
 				  company
 				  avy
+				  diff-hl
 				  drag-stuff
 				  which-key
 				  helm-xref
@@ -184,7 +185,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit multiple-cursors simplenote2 use-package lsp-mode yasnippet dracula-theme ledger-mode exec-path-from-shell expand-region treemacs lsp-treemacs helm-lsp projectile hydra flycheck company avy drag-stuff which-key helm-xref json-mode)))
+   '(diff-hl magit multiple-cursors simplenote2 use-package lsp-mode yasnippet dracula-theme ledger-mode exec-path-from-shell expand-region treemacs lsp-treemacs helm-lsp projectile hydra flycheck company avy drag-stuff which-key helm-xref json-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -248,3 +249,5 @@ the line."
 (global-set-key (kbd "C-k") 'my/kill-line)
 
 (setq mac-right-option-modifier nil)
+
+(global-diff-hl-mode)
