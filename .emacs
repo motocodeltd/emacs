@@ -19,6 +19,12 @@
                                   lsp-treemacs
                                   helm-lsp
                                   projectile
+                                  helm-projectile
+                                  dumb-jump
+                                  magit
+                                  ivy
+                                  counsel
+                                  swiper
                                   hydra
                                   flycheck
                                   company
@@ -191,3 +197,103 @@
 
 (global-diff-hl-mode)
 (setq vc-follow-symlinks t)
+
+;; ========== IntelliJ-like Configuration ==========
+
+;; Tab/buffer switching similar to Ctrl-Tab in IntelliJ
+(global-set-key (kbd "C-<tab>") 'helm-mini)
+
+;; Project management with Projectile
+(use-package projectile
+  :config
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (setq projectile-completion-system 'helm))
+
+(use-package helm-projectile
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
+
+;; IntelliJ-like keybindings
+(global-set-key (kbd "C-S-n") 'helm-projectile-find-file) ;; Ctrl+Shift+N for file navigation
+(global-set-key (kbd "C-S-f") 'helm-projectile-grep)      ;; Ctrl+Shift+F for project search
+(global-set-key (kbd "C-x C-b") 'ibuffer)                 ;; Better buffer list like IntelliJ
+(global-set-key (kbd "C-/") 'comment-line)                ;; Comment/uncomment lines
+(global-set-key (kbd "C-S-o") 'counsel-imenu)             ;; Navigate to symbol
+
+;; Smart code navigation
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-selector 'helm)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+
+;; Jump to definition like in IntelliJ
+(global-set-key (kbd "M-.") 'xref-find-definitions)
+(global-set-key (kbd "M-,") 'xref-pop-marker-stack)
+
+;; Enhanced search
+(use-package swiper)
+
+;; Better code completion
+(use-package company
+  :config
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
+  ;; IntelliJ-like behavior for completion
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
+
+;; LSP configuration
+(use-package lsp-mode
+  :commands lsp
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (setq lsp-enable-snippet t)
+  (setq lsp-prefer-flymake nil))
+
+;; Treemacs project sidebar (like IntelliJ's project view)
+(use-package treemacs
+  :config
+  (global-set-key (kbd "C-c t") 'treemacs)
+  (treemacs-project-follow-mode t))
+
+;; Git integration
+(use-package magit
+  :bind (("C-x g" . magit-status)))
+
+;; Configure treemacs to look more like IntelliJ's project view
+(use-package lsp-treemacs
+  :after (lsp-mode treemacs)
+  :config
+  (lsp-treemacs-sync-mode 1))
+
+;; Provide IDE-like refactoring capabilities
+(defhydra hydra-refactor (:color blue :hint nil)
+  "
+^Refactor^
+^^^^^^^^^-----------------------------------------
+_r_: rename      _e_: extract function    _i_: inline
+_l_: extract local var    _o_: organize imports
+"
+  ("r" lsp-rename "rename")
+  ("e" lsp-extract-function "extract function")
+  ("l" lsp-extract-variable "extract variable")
+  ("i" lsp-execute-code-action "code actions")
+  ("o" lsp-organize-imports "organize imports")
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-c r") 'hydra-refactor/body)
+
+;; Add IntelliJ-like run/debug bindings
+(global-set-key (kbd "C-S-x") 'lsp-execute-code-action)
+(global-set-key (kbd "<f9>") 'compile)
+(global-set-key (kbd "<f5>") 'recompile)
+
+;; Enable which-key for discovering key bindings
+(use-package which-key
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 0.3))
