@@ -315,5 +315,3 @@ _l_: extract local var    _o_: organize imports
 (define-key global-map (kbd "C-x r s") 'remote-sudo-map)
 (define-key remote-sudo-map (kbd "f") #'open-remote-sudo-file)
 
-(define-key remote-sudo-map (kbd "d") #'open-remote-sudo-dired)
-(define-key remote-sudo-map (kbd "e") #'edit-remote-sudo-config)
