@@ -297,3 +297,23 @@ _l_: extract local var    _o_: organize imports
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.3))
+
+(defun open-remote-sudo-file ()
+  "Prompt for SSH host/user and sudo target, then open remote file with TRAMP and completion."
+  (interactive)
+  (let* ((host (read-string "SSH host (e.g. 192.168.1.10): "))
+         (ssh-user (read-string "SSH user: " user-login-name))
+         (sudo-user (read-string "Sudo as user: " "root"))
+         ;; Build a base TRAMP path for directory completion
+         (tramp-dir (format "/ssh:%s@%s|sudo:%s@%s:~/" ssh-user host sudo-user host))
+         ;; Now use that as the base for file name completion
+         (file (read-file-name "Remote file: " tramp-dir)))
+    (find-file file)))
+
+;; Keybinding: C-x r s f
+(define-prefix-command 'remote-sudo-map)
+(define-key global-map (kbd "C-x r s") 'remote-sudo-map)
+(define-key remote-sudo-map (kbd "f") #'open-remote-sudo-file)
+
+(define-key remote-sudo-map (kbd "d") #'open-remote-sudo-dired)
+(define-key remote-sudo-map (kbd "e") #'edit-remote-sudo-config)
