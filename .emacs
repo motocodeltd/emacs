@@ -56,6 +56,8 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
+
+(hl-line-mode 1)
 ;; Simplenote
 (require 'simplenote2)
 (simplenote2-setup)
