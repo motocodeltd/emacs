@@ -11,7 +11,6 @@
                                   use-package
                                   lsp-mode
                                   yasnippet
-                                  dracula-theme
                                   ledger-mode
                                   exec-path-from-shell
                                   expand-region
@@ -83,7 +82,7 @@
 (require 'simplenote2)
 (simplenote2-setup)
 (global-set-key (kbd "<f12>") 'simplenote2-list)
-(load-theme 'dracula t)
+(load-theme 'modus-vivendi-deuteranopia t)
 
 ;; Helm
 (defun double-flash-mode-line ()
