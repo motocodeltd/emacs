@@ -72,6 +72,8 @@
 
 (recentf-mode 1)
 
+(setq use-dialog-box nil)
+
 
 ;; Simplenote
 (require 'simplenote2)
