@@ -74,6 +74,10 @@
 
 (setq use-dialog-box nil)
 
+;; Revert buffers when the underlying file has changed
+(global-auto-revert-mode 1)
+;; Revert Dired and other buffers
+(setq global-auto-revert-non-file-buffers t)
 
 ;; Simplenote
 (require 'simplenote2)
