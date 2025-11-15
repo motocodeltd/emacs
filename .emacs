@@ -57,7 +57,7 @@
 (column-number-mode 1)
 
 
-(hl-line-mode 1)
+(global-hl-line-mode 1)
 
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
