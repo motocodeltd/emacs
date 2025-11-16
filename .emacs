@@ -187,8 +187,6 @@
 
 (global-set-key (kbd "C-k") 'my/kill-line)
 
-(setq mac-right-option-modifier nil)
-
 (with-eval-after-load "ispell"
   ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
   ;; dictionary' even though multiple dictionaries will be configured
@@ -341,3 +339,6 @@ _l_: extract local var    _o_: organize imports
 (pixel-scroll-precision-mode 1)
 (scroll-bar-mode -1)
 (setq-default cursor-type 'box)
+
+(setq mac-option-modifier 'meta)
+(setq mac-right-option-modifier nil)
