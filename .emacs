@@ -337,3 +337,7 @@ _l_: extract local var    _o_: organize imports
 (define-key global-map (kbd "C-x r s") 'remote-sudo-map)
 (define-key remote-sudo-map (kbd "f") #'open-remote-sudo-file)
 
+
+(pixel-scroll-precision-mode 1)
+(scroll-bar-mode -1)
+(setq-default cursor-type 'box)
