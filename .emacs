@@ -1,3 +1,10 @@
+;; -*- lexical-binding: t; -*-
+
+(setq elisp-enable-automatic-lexical-binding-check nil)
+(setq elisp-lint-lexical-binding nil)
+(setq byte-compile-warnings nil)
+(setq warning-minimum-level :error)
+
 ;; Ensure MELPA is loaded
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -315,3 +322,41 @@ _l_: extract local var    _o_: organize imports
 (global-set-key (kbd "s-V")   #'consult-yank-from-kill-ring)
 
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
+
+;; ==============================================
+;; Doom-modeline — Simplified Nerd-Icons Version
+;; ==============================================
+
+;; Ensure nerd-icons is installed (doom-modeline depends on it)
+(use-package nerd-icons
+  :ensure t)
+
+;; Your doom-modeline setup
+(use-package doom-modeline
+  :ensure t
+  :init
+  ;; Enable as early as possible
+  (doom-modeline-mode 1)
+
+  :custom
+  ;; Enable icons if the Nerd Icons font is available
+  ;; (fails gracefully if missing)
+  (doom-modeline-icon
+   (not (null (find-font (font-spec :name "Nerd Icons")))))
+
+  ;; Clean look
+  (doom-modeline-height 25)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+
+  ;; Extra useful info
+  (doom-modeline-major-mode-icon t)
+  (doom-modeline-buffer-state-icon t)
+  (doom-modeline-buffer-modification-icon t)
+
+  ;; Keeps modeline fast
+  (doom-modeline-env-version t)
+
+  :config
+  ;; Warn the user if the Nerd Icons font hasn't been installed
+  (unless (find-font (font-spec :name "Nerd Icons"))
+    (message "⚠ Nerd Icons font missing — run M-x nerd-icons-install-fonts")))
