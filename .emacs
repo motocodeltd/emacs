@@ -342,3 +342,11 @@ _l_: extract local var    _o_: organize imports
 
 (setq mac-option-modifier 'meta)
 (setq mac-right-option-modifier nil)
+
+;; Keep diff-hl up to date automatically
+(global-diff-hl-mode 1)
+(diff-hl-flydiff-mode 1)
+(setq auto-revert-check-vc-info t)
+
+(with-eval-after-load 'magit
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
