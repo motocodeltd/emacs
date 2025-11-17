@@ -356,3 +356,33 @@ _l_: extract local var    _o_: organize imports
 (add-hook 'after-save-hook 'diff-hl-update)
 (add-hook 'focus-in-hook 'diff-hl-update)
 (run-with-idle-timer 2 t 'diff-hl-update)
+
+;;;; ======================
+;;;; Phase 2 – Modern Completion Stack
+;;;; ======================
+
+;; Vertico: modern minibuffer completion UI
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+;; Orderless: IntelliJ-style fuzzy matching
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; Marginalia: annotations for commands/files/buffers
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+;; Consult: modern commands (search, buffer switcher, yank history, etc.)
+(use-package consult
+  :ensure t)
+
+;; IntelliJ-style: Paste History  (Cmd+Shift+V)
+(global-set-key (kbd "s-S-v") #'consult-yank-from-kill-ring)
