@@ -350,3 +350,9 @@ _l_: extract local var    _o_: organize imports
 
 (with-eval-after-load 'magit
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+(setq auto-revert-check-vc-info t)
+
+;; Recompute diff-hl whenever VC state changes
+(add-hook 'after-save-hook 'diff-hl-update)
+(add-hook 'focus-in-hook 'diff-hl-update)
+(run-with-idle-timer 2 t 'diff-hl-update)
