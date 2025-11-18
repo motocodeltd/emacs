@@ -360,3 +360,8 @@ _l_: extract local var    _o_: organize imports
   ;; Warn the user if the Nerd Icons font hasn't been installed
   (unless (find-font (font-spec :name "Nerd Icons"))
     (message "⚠ Nerd Icons font missing — run M-x nerd-icons-install-fonts")))
+
+
+(setq company-backends
+      '((company-capf           ;; LSP and all proper major-mode completions
+         company-files)))        ;; file/path completion only
